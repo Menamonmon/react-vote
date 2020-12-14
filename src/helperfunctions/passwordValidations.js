@@ -19,7 +19,7 @@ const validatePasswords = (pass1, pass2, minLength = 8, maxLength = 50) => {
     if (pass1.length < minLength || pass1.length > maxLength) {
         return `the password's length must be between ${minLength} and ${maxLength}`;
     }
-    const validationRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]$/;
+    const validationRegex = /^.*(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/;
     if (!validationRegex.test(pass1)) {
         return [
             'your password must have at least one uppercase letter',

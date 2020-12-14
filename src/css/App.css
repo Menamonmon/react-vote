@@ -233,7 +233,7 @@
   display: block;
 }
 
-.login-form {
+.auth-form {
     width: 80vw;
     min-width: 500px;
     max-width: 600px;
@@ -247,7 +247,7 @@
     color: var(--light-2)
 }
 
-.login-title {
+.auth-form-title {
     color: var(--big-title-color);
     padding-bottom: 10px;
     border-bottom: 2px solid var(--big-title-color);
@@ -269,7 +269,7 @@
     margin: 5% 1%;
 }
 
-.login-form-submit-btn {
+.form-submit-btn {
     width: 100px;
     height: 50px;
     border-radius: 15px;
@@ -281,7 +281,7 @@
     border: 1px solid var(--light-2);
 }
 
-.login-form-submit-btn:hover {
+.form-submit-btn:hover {
     border: none;
     color: white;
     background-color: var(--dark-2);
@@ -302,4 +302,14 @@
 
 .form-error > .error-list {
     margin: 5px;
+}
+
+.logout-page {
+    max-height: 500px;
+    min-height: fit-content;
+    padding: 30px;
+}
+
+.logout-content {
+    margin: 30px 0;
 }

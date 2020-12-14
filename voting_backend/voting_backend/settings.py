@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     # REST Apps
     'rest_framework',
     'rest_framework.authtoken',
+
+    # Outside apps
+    'corsheaders'
 ]
 
 REST_FRAMEWORK = {
@@ -65,7 +68,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Cors headers middleware
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+    'http://192.168.56.1:3000',
+)
 
 ROOT_URLCONF = 'voting_backend.urls'
 
