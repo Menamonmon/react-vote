@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 
+import { login } from '../helpers/auth';
 import FormError from "../components/FormError";
 
 const initialLoginData = {
@@ -75,30 +75,6 @@ export default function LoginForm(props) {
     return false;
   };
 
-  // A function that would handle the requests for logging the user in
-  const loginToServer = (formData, url, callback) => {
-    axios
-      .post(url, {
-        username: formData.username,
-        password: formData.password,
-      })
-      .then((res) => {
-        callback(res.data.token);
-      })
-      .catch((err) => {
-        if (!err.response || err.response.status !== 400) {
-          console.log(err);
-          return false;
-        }
-        const errorMessage = "invalid username and/or password.";
-        setErrors((prev) => {
-          const usernameErrors = [...prev.username];
-          usernameErrors.push(errorMessage);
-          return { ...prev, username: usernameErrors };
-        });
-      });
-  };
-
   // A function that would run the necessary validations before performing the onSubmit action from the props
   const submitForm = (e) => {
     setErrors(initialLoginErrorsData);
@@ -106,12 +82,26 @@ export default function LoginForm(props) {
     if (!isFormDataValid) {
       return false;
     }
-    function loginCallback({ token }) {
-      onSubmit(token);
+
+    function loginSuccessCallback(response) {
+      onSubmit(response.data.token);
       history.push(redirect);
     }
 
-    loginToServer(formData, loginurl, loginCallback);
+    function loginErrorCallback(error) {
+      if (!error.response || error.response.status !== 400) {
+        console.log(error);
+        return false;
+      }
+      const errorMessage = "invalid username and/or password.";
+      setErrors((prev) => {
+        const usernameErrors = [...prev.username];
+        usernameErrors.push(errorMessage);
+        return { ...prev, username: usernameErrors };
+      });
+    }
+
+    login(formData, loginurl, loginSuccessCallback, loginErrorCallback);
   };
 
   // A function that updates the formData as the data changes in the input fields below
