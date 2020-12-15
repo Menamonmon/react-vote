@@ -126,9 +126,7 @@
         position: fixed;
         height: 100vh;
         width: var(--nav-width-mobile);
-        top: 50%;
-        translate: translateY(-50%);
-        right: -100%;
+        right: -200%;
         flex-direction: column;
         padding-top: 10vh;
         align-items: flex-start;

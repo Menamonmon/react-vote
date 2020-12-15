@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 import FormError from "../components/FormError";
@@ -13,11 +14,6 @@ const initialLoginErrorsData = {
   username: [],
   password: [],
   confirm_password: [],
-};
-
-const initialLoginState = {
-  toke: "",
-  success: false,
 };
 
 function errorToFormErrorComponent(errors) {
@@ -35,12 +31,12 @@ function errorToFormErrorComponent(errors) {
 }
 
 export default function LoginForm(props) {
-  const { onSubmit, passvalidation, loginurl } = props;
+  const { onSubmit, passvalidation, loginurl, redirect } = props;
+  const history = useHistory();
 
   // The Component's states
   let [formData, setForm] = useState(initialLoginData);
   let [errors, setErrors] = useState(initialLoginErrorsData);
-  let [loginState, setLoginState] = useState(initialLoginState);
 
   // A fuction that will validate all the data in the form
   const validateFormData = (fd) => {
@@ -80,23 +76,26 @@ export default function LoginForm(props) {
   };
 
   // A function that would handle the requests for logging the user in
-  const loginToServer = (formData, url) => {
+  const loginToServer = (formData, url, callback) => {
     axios
       .post(url, {
         username: formData.username,
         password: formData.password,
       })
       .then((res) => {
-        setLoginState({ success: true, token: res.data.token });
+        callback(res.data.token);
       })
       .catch((err) => {
+        if (!err.response || err.response.status !== 400) {
+          console.log(err);
+          return false;
+        }
         const errorMessage = "invalid username and/or password.";
         setErrors((prev) => {
           const usernameErrors = [...prev.username];
           usernameErrors.push(errorMessage);
           return { ...prev, username: usernameErrors };
         });
-        setLoginState({ success: false, token: "" });
       });
   };
 
@@ -107,12 +106,12 @@ export default function LoginForm(props) {
     if (!isFormDataValid) {
       return false;
     }
-    loginToServer(formData, loginurl);
-    if (!loginState.success) {
-      return false;
+    function loginCallback({ token }) {
+      onSubmit(token);
+      history.push(redirect);
     }
-    onSubmit(loginState.token);
-    // e.preventDefault();
+
+    loginToServer(formData, loginurl, loginCallback);
   };
 
   // A function that updates the formData as the data changes in the input fields below
@@ -125,7 +124,7 @@ export default function LoginForm(props) {
   const errorComponents = errorToFormErrorComponent(errors);
   return (
     <form className="auth-form">
-      <h2 className="auth-form-tite">Login to React Vote</h2>
+      <h2 className="auth-form-title">Login to React Vote</h2>
       <label className="form-label login-label">
         Username:
         <input

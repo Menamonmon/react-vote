@@ -20,10 +20,41 @@ electionLinks template
 
 */
 
-export default function Navbar(props) {
+function AuthenticatedNavLinks({ navToggled, electionLinks }) {
+  return (
+    <ul className={`nav-links ${navToggled ? "open" : ""}`}>
+      <DropdownMenu links={electionLinks} key="elections">
+        <li className="nav-link nav-link-btn">Elections</li>
+      </DropdownMenu>
+      <Link to="/results" key="results">
+        <li className="nav-link nav-link-btn">Results</li>
+      </Link>
+      <Link to="/votes" key="votes">
+        <li className="nav-link nav-link-btn">Your Votes</li>
+      </Link>
+      <Link to="/logout" key="logout">
+        <li className="nav-link  nav-link-btn">Logout</li>
+      </Link>
+    </ul>
+  );
+}
+
+function UnauthenticatedNavLinks({ navToggled }) {
+  return (
+    <ul className={`nav-links ${navToggled ? "open" : ""}`}>
+      <Link to="/login" key="login">
+        <li className="nav-link  nav-link-btn">Login</li>
+      </Link>
+      <Link to="/signup" key="signup">
+        <li className="nav-link nav-link-btn">Sign Up</li>
+      </Link>
+    </ul>
+  );
+}
+
+export default function Navbar({ electionLinks, loggedin }) {
   let [navToggled, setNavToggled] = useState(false);
   const toggle = () => {
-    console.log("Clicked");
     setNavToggled((prev) => !prev);
   };
 
@@ -36,34 +67,15 @@ export default function Navbar(props) {
         <div className="line-1 line"></div>
         <div className="line-2 line"></div>
         <div className="line-3 line"></div>
+        {loggedin ? (
+          <AuthenticatedNavLinks
+            navToggled={navToggled}
+            electionLinks={electionLinks}
+          />
+        ) : (
+          <UnauthenticatedNavLinks navToggled={navToggled} />
+        )}
       </div>
-      <ul className={`nav-links ${navToggled ? "open" : ""}`}>
-        <DropdownMenu links={props.electionLinks} key={0}>
-          <li className="nav-link nav-link-btn" key={0}>
-            Elections
-          </li>
-        </DropdownMenu>
-        <Link to="/results" key={1}>
-          <li className="nav-link nav-link-btn" key={1}>
-            Results
-          </li>
-        </Link>
-        <Link to="/votes" key={2}>
-          <li className="nav-link nav-link-btn" key={2}>
-            Your Votes
-          </li>
-        </Link>
-        <Link to="/login" key={4}>
-          <li className="nav-link  nav-link-btn" key={4}>
-            Login
-          </li>
-        </Link>
-        <Link to="/signup" key={3}>
-          <li className="nav-link nav-link-btn" key={3}>
-            Sign Up
-          </li>
-        </Link>
-      </ul>
     </nav>
   );
 }
