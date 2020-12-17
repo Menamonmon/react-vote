@@ -1,7 +1,4 @@
-from django.urls import path, include
-from .views import CustomUsersView
+from django.urls import path
 
 urlpatterns = [
-    path('<str:username>', CustomUsersView.as_view()),
-    path('', CustomUsersView.as_view()),
 ]

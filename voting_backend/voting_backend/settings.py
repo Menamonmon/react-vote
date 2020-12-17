@@ -61,6 +61,10 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    # Cors headers middleware
+    'corsheaders.middleware.CorsMiddleware',
+
+    # Django's middlewares
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -68,15 +72,35 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    # Cors headers middleware
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
+# ALLOWED_HOSTS = ['*']  
 CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ORIGIN_WHITELIST = (
-#     'http://192.168.56.1:3000',
-# )
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'access-control-allow-origin'
+]
+
+CORS_ORIGIN_WHITELIST = (
+    'http://192.168.56.1:3000',
+    'http://localhost:3000',
+)
 
 ROOT_URLCONF = 'voting_backend.urls'
 
