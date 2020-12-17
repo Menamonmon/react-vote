@@ -26,7 +26,7 @@ export const AuthProvider = ({ APIUrl, children }) => {
   }
 
   useEffect(() => {
-    let isAuthenticated = localStorage.getItem("isAuthenticated");
+    let isAuthenticated = Boolean(localStorage.getItem("isAuthenticated"));
     isAuthenticated = isAuthenticated === true ? true : false;
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -40,6 +40,9 @@ export const AuthProvider = ({ APIUrl, children }) => {
       .then((response) => {
         console.log("RESPONSE SUCCESSFUL");
         const token = response.data.token;
+        if (token) {
+          localStorage.setItem('isAuthenticated', true);
+        }
         addRequestsTokenToAxios(token);
 
         getUserData(APIUrl)
@@ -54,6 +57,7 @@ export const AuthProvider = ({ APIUrl, children }) => {
               localStorage.setItem("user", JSON.stringify(newUser));
               return newUser;
             });
+            
           })
           .catch((error) => {
             console.log(error);
@@ -79,6 +83,7 @@ export const AuthProvider = ({ APIUrl, children }) => {
         console.log(error);
         errorCb(error);
       });
+    localStorage.setItem('isAuthenticated', false);
   }
 
   return (
