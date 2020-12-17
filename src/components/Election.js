@@ -60,3 +60,15 @@ export default function Election(props) {
     </div>
   );
 }
+
+export function electionsList(elections) {
+  return elections.map(({ _type, id, state, year, candidate_set }) => (
+    <Election
+      type={_type}
+      id={id}
+      state={state}
+      year={year}
+      candidates={candidate_set}
+    />
+  ));
+}

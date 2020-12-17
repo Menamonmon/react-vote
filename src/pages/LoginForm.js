@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
-import { login } from '../helpers/auth';
+import { AuthContext } from '../contexts/AuthConext';
+
 import FormError from "../components/FormError";
+
+
 
 const initialLoginData = {
   username: "",
@@ -31,7 +34,8 @@ function errorToFormErrorComponent(errors) {
 }
 
 export default function LoginForm(props) {
-  const { onSubmit, passvalidation, loginurl, redirect } = props;
+  const { passvalidation, loginurl, redirect } = props;
+  const { login } = useContext(AuthContext);
   const history = useHistory();
 
   // The Component's states
@@ -78,13 +82,12 @@ export default function LoginForm(props) {
   // A function that would run the necessary validations before performing the onSubmit action from the props
   const submitForm = (e) => {
     setErrors(initialLoginErrorsData);
-    const isFormDataValid = validateFormData(formData);
-    if (!isFormDataValid) {
-      return false;
-    }
+    // const isFormDataValid = validateFormData(formData);
+    // if (!isFormDataValid) {
+    //   return false;
+    // }
 
     function loginSuccessCallback(response) {
-      onSubmit(response.data.token);
       history.push(redirect);
     }
 
@@ -101,7 +104,7 @@ export default function LoginForm(props) {
       });
     }
 
-    login(formData, loginurl, loginSuccessCallback, loginErrorCallback);
+    login(formData, loginSuccessCallback, loginErrorCallback);
   };
 
   // A function that updates the formData as the data changes in the input fields below
