@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthConext";
 
-export default function LogoutPage(props) {
+export default function LogoutPage() {
+  const { logout } = useContext(AuthContext);
+
+  useEffect(() => {
+    logout()
+  }, []);
+  
   return (
     <div className="logout-page auth-form">
       <h2 className="auth-form-title logout-title">Logout</h2>
