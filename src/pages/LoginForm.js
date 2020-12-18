@@ -34,7 +34,7 @@ function errorToFormErrorComponent(errors) {
 }
 
 export default function LoginForm(props) {
-  const { passvalidation, loginurl, redirect } = props;
+  const { passvalidation, redirect } = props;
   const { login } = useContext(AuthContext);
   const history = useHistory();
 
@@ -87,7 +87,7 @@ export default function LoginForm(props) {
     //   return false;
     // }
 
-    function loginSuccessCallback(response) {
+    function loginSuccessCallback() {
       history.push(redirect);
     }
 
