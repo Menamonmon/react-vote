@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthConext";
 
 import DropdownMenu from "./DropdownMenu";
 
@@ -52,7 +53,11 @@ function UnauthenticatedNavLinks({ navToggled }) {
   );
 }
 
-export default function Navbar({ electionLinks, loggedin }) {
+export default function Navbar() {
+  const {
+    isAuthenticated,
+    user: { electionLinks },
+  } = useContext(AuthContext);
   let [navToggled, setNavToggled] = useState(false);
   const toggle = () => {
     setNavToggled((prev) => !prev);
@@ -67,7 +72,7 @@ export default function Navbar({ electionLinks, loggedin }) {
         <div className="line-1 line"></div>
         <div className="line-2 line"></div>
         <div className="line-3 line"></div>
-        {loggedin ? (
+        {isAuthenticated ? (
           <AuthenticatedNavLinks
             navToggled={navToggled}
             electionLinks={electionLinks}
