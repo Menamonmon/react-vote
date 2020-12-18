@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./css/App.css";
 
 import Nav from "./components/Nav";
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute, { UnprotectedRoute } from "./components/ProtectedRoute";
 import LoginForm from "./pages/LoginForm";
 import SignupForm from "./pages/SignupForm";
 import Votes from "./pages/Votes";
@@ -26,13 +26,13 @@ export default function App() {
           <Nav />
           <Switch>
             <Route exact path="/" component={Home} key="home" />
-            <Route exact path="/login" key="login">
+            <UnprotectedRoute exact path="/login" key="login">
               <LoginForm
                 passvalidation={validatePasswords}
                 redirect="/"
               />
-            </Route>
-            <Route exact path="/signup" component={SignupForm} key="signup" />
+            </UnprotectedRoute>
+            <UnprotectedRoute exact path="/signup" component={SignupForm} key="signup" />
             <ProtectedRoute
               exact
               path="/logout"
