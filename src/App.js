@@ -13,7 +13,7 @@ import LogoutPage from "./pages/LogoutPage";
 
 import { validatePasswords } from "./helpers/passwordValidations";
 
-import { AuthProvider } from './contexts/AuthConext';
+import { AuthProvider } from "./contexts/AuthConext";
 import ElectionRoutes from "./components/ElectionRoutes";
 
 export default function App() {
@@ -26,13 +26,21 @@ export default function App() {
           <Nav />
           <Switch>
             <Route exact path="/" component={Home} key="home" />
-            <UnprotectedRoute exact path="/login" key="login">
-              <LoginForm
-                passvalidation={validatePasswords}
-                redirect="/"
-              />
-            </UnprotectedRoute>
-            <UnprotectedRoute exact path="/signup" component={SignupForm} key="signup" />
+            <UnprotectedRoute
+              exact
+              path="/login"
+              redirect="/"
+              component={LoginForm}
+              passvalidation={validatePasswords}
+              key="login"
+            />
+            <UnprotectedRoute
+              exact
+              path="/signup"
+              redirect="/"
+              component={SignupForm}
+              key="signup"
+            />
             <ProtectedRoute
               exact
               path="/logout"
