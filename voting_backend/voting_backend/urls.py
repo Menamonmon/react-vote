@@ -24,6 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('elections/', include('elections.urls'), name='elections'),
     path('votes/', VotesListView.as_view(), name='votes'),
-    path('accounts/register/', include('users.register.urls'), name='register'),
-    path('accounts/login/', login_view, name='login')
+    path('accounts/', include('users.accounts.urls'), name='accoutns'),
 ]
