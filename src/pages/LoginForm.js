@@ -1,22 +1,18 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
-import { AuthContext } from '../contexts/AuthConext';
-
+import { AuthContext } from "../contexts/AuthConext";
 import FormError from "../components/FormError";
-
-
+import { loginPasswordValidation } from "../helpers/passwordValidations";
 
 const initialLoginData = {
   username: "",
   password: "",
-  confirm_password: "",
 };
 
 const initialLoginErrorsData = {
   username: [],
   password: [],
-  confirm_password: [],
 };
 
 function errorToFormErrorComponent(errors) {
@@ -34,7 +30,7 @@ function errorToFormErrorComponent(errors) {
 }
 
 export default function LoginForm(props) {
-  const { passvalidation, redirect } = props;
+  const { redirect } = props;
   const { login } = useContext(AuthContext);
   const history = useHistory();
 
@@ -59,20 +55,16 @@ export default function LoginForm(props) {
       return false;
     }
 
-    const { password, confirm_password } = fd;
-    const passwordsValidation = passvalidation(password, confirm_password);
+    const { password } = fd;
+    const passwordsValidation = loginPasswordValidation(password);
     if (passwordsValidation === true) {
       return true;
     } else {
       setErrors((prev) => {
         let confirmPasswordErrorList = [...prev.confirm_password];
-        if (Array.isArray(passwordsValidation)) {
-          confirmPasswordErrorList = confirmPasswordErrorList.concat(
-            passwordsValidation
-          );
-        } else {
-          confirmPasswordErrorList.push(passwordsValidation);
-        }
+        confirmPasswordErrorList = confirmPasswordErrorList.concat(
+          passwordsValidation
+        );
         return { ...prev, confirm_password: confirmPasswordErrorList };
       });
     }
@@ -141,18 +133,6 @@ export default function LoginForm(props) {
           name="password"
         />
         {errorComponents.password}
-      </label>
-      <label className="form-label login-label">
-        Confirm Password:
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          value={formData.confirm_password}
-          onChange={handleChange}
-          className="form-field login confirm-password-input"
-          name="confirm_password"
-        />
-        {errorComponents.confirm_password}
       </label>
       <button className="form-submit-btn" type="button" onClick={submitForm}>
         Login
