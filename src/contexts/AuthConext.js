@@ -12,7 +12,8 @@ const initialAuth = {
   isAuthenticated: false,
   user: { elections: [], votes: [], electionLinks: [] },
   login: () => {},
-  logout: () => {},
+  logout: () => { },
+  APIUrl: '',
 };
 
 export const AuthContext = createContext({});
@@ -30,7 +31,7 @@ export const AuthProvider = ({ APIUrl, children }) => {
     isAuthenticated = isAuthenticated === true ? true : false;
     const user = JSON.parse(localStorage.getItem("user"));
 
-    setAuth({ isAuthenticated, user });
+    setAuth({ isAuthenticated, user, APIUrl });
   }, []);
 
   function login(userData, successCb = () => {}, errorCb = () => {}) {
@@ -41,7 +42,7 @@ export const AuthProvider = ({ APIUrl, children }) => {
         console.log("RESPONSE SUCCESSFUL");
         const token = response.data.token;
         if (token) {
-          localStorage.setItem('isAuthenticated', true);
+          localStorage.setItem("isAuthenticated", true);
         }
         addRequestsTokenToAxios(token);
 
@@ -57,7 +58,6 @@ export const AuthProvider = ({ APIUrl, children }) => {
               localStorage.setItem("user", JSON.stringify(newUser));
               return newUser;
             });
-            
           })
           .catch((error) => {
             console.log(error);
@@ -83,7 +83,7 @@ export const AuthProvider = ({ APIUrl, children }) => {
         console.log(error);
         errorCb(error);
       });
-    localStorage.setItem('isAuthenticated', false);
+    localStorage.setItem("isAuthenticated", false);
   }
 
   return (
