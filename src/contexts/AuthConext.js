@@ -35,11 +35,9 @@ export const AuthProvider = ({ APIUrl, children }) => {
   }, []);
 
   function login(userData, successCb = () => {}, errorCb = () => {}) {
-    console.log("LOGIN FUNCTION CALLED");
     axios
       .post(`${APIUrl}accounts/login/`, userData)
       .then((response) => {
-        console.log("RESPONSE SUCCESSFUL");
         const token = response.data.token;
         if (token) {
           localStorage.setItem("isAuthenticated", true);
@@ -73,17 +71,17 @@ export const AuthProvider = ({ APIUrl, children }) => {
 
   function logout(successCb = () => {}, errorCb = () => {}) {
     axios
-      .post(`${APIUrl}accounts/logout`)
+      .get(`${APIUrl}accounts/logout`)
       .then((response) => {
         setUser(initialAuth.user);
         removeRequestsTokenFromAxios();
+        localStorage.setItem("isAuthenticated", false);
         successCb(response);
       })
       .catch((error) => {
         console.log(error);
         errorCb(error);
       });
-    localStorage.setItem("isAuthenticated", false);
   }
 
   return (
