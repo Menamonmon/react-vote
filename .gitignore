@@ -138,6 +138,7 @@ venv.bak/
 **/__pycache__	
 # sftp configuration file 
 sftp-config.json 
+*.eslintcache
 
 # Package control specific files Package 
 Control.last-run 
