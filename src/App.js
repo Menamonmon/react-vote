@@ -29,7 +29,6 @@ export default function App() {
             <Route exact path="/login" key="login">
               <LoginForm
                 passvalidation={validatePasswords}
-                loginurl={`${APIUrl}accounts/login/`}
                 redirect="/"
               />
             </Route>
