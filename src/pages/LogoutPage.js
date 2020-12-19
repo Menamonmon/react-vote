@@ -6,8 +6,8 @@ export default function LogoutPage() {
   const { logout } = useContext(AuthContext);
 
   useEffect(() => {
-    logout()
-  });
+    logout();
+  }, []);
 
   return (
     <div className="logout-page auth-form">
