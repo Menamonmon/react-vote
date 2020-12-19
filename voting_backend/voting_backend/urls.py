@@ -25,4 +25,5 @@ urlpatterns = [
     path('elections/', include('elections.urls'), name='elections'),
     path('votes/', VotesListView.as_view(), name='votes'),
     path('accounts/', include('users.accounts.urls'), name='accoutns'),
+    path('users/', include('users.urls'), name='users'),
 ]

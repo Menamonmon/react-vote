@@ -1,11 +1,10 @@
 from rest_framework import status
 from rest_framework import generics
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
-from .models import CustomUser, Vote
+from .models import CustomUser, Vote, USER_STATE_CHOICES
 from .serializers import CustomUserSerializer, VoteSerializer
-
 
 
 class CustomUsersView(generics.ListAPIView):
@@ -35,3 +34,11 @@ class VotesListView(generics.ListAPIView):
         qs = self.get_queryset()
         serializer = VoteSerializer(qs, many=True)
         return Response(serializer.data)
+
+
+class StateChoicesList(generics.ListAPIView):
+    permission_classes = [AllowAny,]
+
+    def list(self, request):
+        data = USER_STATE_CHOICES
+        return Response(data)
