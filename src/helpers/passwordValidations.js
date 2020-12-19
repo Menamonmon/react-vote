@@ -19,9 +19,9 @@ const signupPasswordValidation = (
   maxLength = 50
 ) => {
   let errors = [];
-    if (password !== password2) {
-        errors.push(`passwords don't match.`);
-    }
+  if (password !== password2) {
+    errors.push(`passwords don't match.`);
+  }
   if (password.length < minLength || password.length > maxLength) {
     errors.push(
       `the password's length must be between ${minLength} and ${maxLength}`
@@ -36,7 +36,7 @@ const signupPasswordValidation = (
     ]);
     return errors;
   }
-  if (errors) {
+  if (errors.length !== 0) {
     return errors;
   }
   return true;
