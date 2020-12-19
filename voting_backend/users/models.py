@@ -9,9 +9,9 @@ from rest_framework.authtoken.models import Token
 
 from elections.models import STATE_CHOICES
 
+USER_STATE_CHOICES = STATE_CHOICES[1:]
 
 class CustomUser(AbstractUser):
-    USER_STATE_CHOICES = STATE_CHOICES[1:]
     username = models.CharField(max_length=50, unique=True)
     state = models.CharField(max_length=2, default='US',
                              choices=USER_STATE_CHOICES)
