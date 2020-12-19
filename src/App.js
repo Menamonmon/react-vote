@@ -11,8 +11,6 @@ import Results from "./pages/Results";
 import Home from "./pages/Home";
 import LogoutPage from "./pages/LogoutPage";
 
-import { validatePasswords } from "./helpers/passwordValidations";
-
 import { AuthProvider } from "./contexts/AuthConext";
 import ElectionRoutes from "./components/ElectionRoutes";
 
@@ -31,7 +29,6 @@ export default function App() {
               path="/login"
               redirect="/"
               component={LoginForm}
-              passvalidation={validatePasswords}
               key="login"
             />
             <UnprotectedRoute
