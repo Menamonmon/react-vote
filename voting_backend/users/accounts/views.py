@@ -42,7 +42,7 @@ class LogoutView(APIView):
         # Generate a new one
         # attach the new one to the user
 
-        token_key = request.get('Authorization').replace('Token ', '')
+        token_key = request.headers.get('Authorization').replace('Token ', '')
         token = Token.objects.get(key=token_key)
         user = token.user
         token.delete()
