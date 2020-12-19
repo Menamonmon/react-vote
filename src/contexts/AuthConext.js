@@ -51,7 +51,6 @@ export const AuthProvider = ({ APIUrl, children }) => {
             const [electionsResponse, votesResponse] = response;
             const elections = electionsResponse.data;
             const votes = votesResponse.data;
-            console.log(elections);
             const electionLinks = generateElectionLinks(elections);
             const user = { elections, votes, electionLinks };
             localStorage.setItem("user", JSON.stringify(user));
@@ -61,7 +60,6 @@ export const AuthProvider = ({ APIUrl, children }) => {
           .catch((error) => {
             console.log(error);
           });
-        console.log(axios.defaults.headers.common["Authorization"]);
         successCb(response);
       })
       .catch((error) => {
@@ -81,7 +79,6 @@ export const AuthProvider = ({ APIUrl, children }) => {
       })
       .catch((error) => {
         console.log(error);
-        console.log(axios.defaults.headers.common["Authorization"]);
         errorCb(error);
       });
     removeRequestsTokenFromAxios();
