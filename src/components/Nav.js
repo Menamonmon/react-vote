@@ -1,9 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthConext";
-
 import DropdownMenu from "./DropdownMenu";
-
+import { AuthContext } from "../contexts/AuthConext";
 /*
 
 electionData template
@@ -22,6 +20,8 @@ electionLinks template
 */
 
 function AuthenticatedNavLinks({ navToggled, electionLinks }) {
+  const { logout } = useContext(AuthContext);
+  const logoutCallback = () => { logout(); }
   return (
     <ul className={`nav-links ${navToggled ? "open" : ""}`}>
       <DropdownMenu links={electionLinks} key="elections">
@@ -33,7 +33,7 @@ function AuthenticatedNavLinks({ navToggled, electionLinks }) {
       <Link to="/votes" key="votes">
         <li className="nav-link nav-link-btn">Your Votes</li>
       </Link>
-      <Link to="/logout" key="logout">
+      <Link to="/logout" key="logout" onClick={logoutCallback}>
         <li className="nav-link  nav-link-btn">Logout</li>
       </Link>
     </ul>
@@ -58,6 +58,7 @@ export default function Navbar() {
     isAuthenticated,
     user: { electionLinks },
   } = useContext(AuthContext);
+  console.log(isAuthenticated);
   let [navToggled, setNavToggled] = useState(false);
   const toggle = () => {
     setNavToggled((prev) => !prev);

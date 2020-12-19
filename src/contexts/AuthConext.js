@@ -16,7 +16,12 @@ const initialAuth = {
 
 export const AuthContext = createContext({});
 
+window.onbeforeunload = function () {
+  localStorage.clear();
+};
+
 export const AuthProvider = ({ APIUrl, children }) => {
+  initialAuth.APIUrl = APIUrl;
   let [auth, setAuth] = useState(initialAuth);
 
   useEffect(() => {
@@ -25,23 +30,33 @@ export const AuthProvider = ({ APIUrl, children }) => {
     let user = {};
     try {
       user = JSON.parse(localStorage.getItem("user"));
+      if (!user) {
+        throw new Error('Invalid user');
+      }
     } catch (error) {
       user = initialAuth.user;
     }
 
-    setAuth({ isAuthenticated, user, APIUrl });
+    setAuth(p => ({ ...p, isAuthenticated, user }));
   }, []);
 
-  function login(userData, successCb = () => { }, errorCb = () => { }) {
+  function login(
+    userData,
+    successCb = () => {},
+    errorCb = () => {},
+    isSignup = false
+  ) {
+    const requestUrl = `${APIUrl}accounts/${isSignup ? "register" : "login"}/`;
     axios
-      .post(`${APIUrl}accounts/login/`, userData)
+      .post(requestUrl, userData)
       .then((response) => {
-        const token = response.data.token;
+        const { token } = response.data;
         if (token) {
-          setAuth(p => {
-            const isAuthenticated = true;
-            localStorage.setItem('isAuthenticated', isAuthenticated); 
-            return { ...p, isAuthenticated };
+          setAuth((p) => {
+            p = JSON.parse(JSON.stringify(p))
+            p.isAuthenticated = true;
+            localStorage.setItem("isAuthenticated", p.isAuthenticated);
+            return p;
           });
         }
         addRequestsTokenToAxios(token);
@@ -69,9 +84,9 @@ export const AuthProvider = ({ APIUrl, children }) => {
   }
 
   function logout(successCb = () => {}, errorCb = () => {}) {
-    setAuth(initialAuth);
-    localStorage.setItem("isAuthenticated", initialAuth.isAuthenticated);
+    localStorage.setItem("isAuthenticated", false);
     localStorage.setItem("user", JSON.stringify(initialAuth.user));
+    setAuth(initialAuth);
     axios
       .get(`${APIUrl}accounts/logout`)
       .then((response) => {
@@ -83,9 +98,13 @@ export const AuthProvider = ({ APIUrl, children }) => {
       });
     removeRequestsTokenFromAxios();
   }
+  
+  function signup(userData, successCb = () => {}, errorCb = () => {}) {
+    login(userData, successCb, errorCb, true);
+  }
 
   return (
-    <AuthContext.Provider value={{ ...auth, login, logout }}>
+    <AuthContext.Provider value={{ ...auth, login, logout, signup }}>
       {children}
     </AuthContext.Provider>
   );
