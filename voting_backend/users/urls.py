@@ -1,7 +1,7 @@
 from django.urls import path
 
-from .views import StateChoicesList
+from .views import StateChoicesListView
 
 urlpatterns = [
-    path('states/', StateChoicesList.as_view(), name='states'),
+    path('states/', StateChoicesListView.as_view(), name='states'),
 ]

@@ -1,13 +1,7 @@
-from rest_framework import serializers
-from .models import Vote, CustomUser
+from rest_framework.serializers import ModelSerializer
+from .models import CustomUser
 
-class VoteSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Vote
-        fields = ('user', 'candidate')
-
-
-class CustomUserSerializer(serializers.ModelSerializer):
+class CustomUserSerializer(ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ('username', 'state')

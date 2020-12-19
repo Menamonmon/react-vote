@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # Local Apps
     'elections.apps.ElectionsConfig',
     'users.apps.UsersConfig',
+    'votes.apps.VotesConfig',
 
     # REST Apps
     'rest_framework',

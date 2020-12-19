@@ -18,12 +18,10 @@ from django.urls import path, include
 
 from rest_framework.authtoken.views import obtain_auth_token as login_view
 
-from users.views import VotesListView
-
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('elections/', include('elections.urls'), name='elections'),
-    path('votes/', VotesListView.as_view(), name='votes'),
-    path('accounts/', include('users.accounts.urls'), name='accoutns'),
+    path('votes/', include('votes.urls'), name='votes'),
     path('users/', include('users.urls'), name='users'),
+    path('accounts/', include('users.accounts.urls'), name='accoutns'),
 ]

@@ -1,13 +1,13 @@
 from rest_framework import status
-from rest_framework import generics
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny
 
-from .models import CustomUser, Vote, USER_STATE_CHOICES
-from .serializers import CustomUserSerializer, VoteSerializer
+from .models import CustomUser, USER_STATE_CHOICES
+from .serializers import CustomUserSerializer
 
 
-class CustomUsersView(generics.ListAPIView):
+class CustomUsersView(ListAPIView):
     model = CustomUser
     serializer_class = CustomUserSerializer
 
@@ -20,23 +20,7 @@ class CustomUsersView(generics.ListAPIView):
         else:
             return CustomUser.objects.all()
 
-class VotesListView(generics.ListAPIView):
-    model = Vote
-    serializer_class = VoteSerializer
-    permission_classes = [IsAuthenticated,]
-
-    def get_queryset(self):
-        user = self.request.user
-        qs = Vote.objects.filter(user=user)
-        return qs
-
-    def list(self, request):
-        qs = self.get_queryset()
-        serializer = VoteSerializer(qs, many=True)
-        return Response(serializer.data)
-
-
-class StateChoicesList(generics.ListAPIView):
+class StateChoicesListView(ListAPIView):
     permission_classes = [AllowAny,]
 
     def list(self, request):

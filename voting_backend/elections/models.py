@@ -81,9 +81,11 @@ class Candidate(models.Model):
 
     def add_vote(self):
         self.vote_count += 1
+        self.save()
 
     def remove_vote(self):
         self.vote_count -= 1
+        self.save()
 
     def __str__(self):
         return f'{self.name} ({self.party})'
