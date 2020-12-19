@@ -50,10 +50,7 @@ export default function LoginForm(props) {
         });
       }
     }
-    if (fieldsAreMissing) {
-      return false;
-    }
-    return false;
+    return !fieldsAreMissing;
   };
 
   // A function that would run the necessary validations before performing the onSubmit action from the props
