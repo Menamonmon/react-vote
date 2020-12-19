@@ -11,36 +11,38 @@ import {
 const initialAuth = {
   isAuthenticated: false,
   user: { elections: [], votes: [], electionLinks: [] },
-  login: () => {},
-  logout: () => { },
-  APIUrl: '',
+  APIUrl: "",
 };
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ APIUrl, children }) => {
   let [auth, setAuth] = useState(initialAuth);
-  let [user, changeUser] = useState(initialAuth.user);
-  function setUser(...args) {
-    changeUser(...args);
-    setAuth((p) => ({ ...p, user }));
-  }
 
   useEffect(() => {
     let isAuthenticated = Boolean(localStorage.getItem("isAuthenticated"));
     isAuthenticated = isAuthenticated === true ? true : false;
-    const user = JSON.parse(localStorage.getItem("user"));
+    let user = {};
+    try {
+      user = JSON.parse(localStorage.getItem("user"));
+    } catch (error) {
+      user = initialAuth.user;
+    }
 
     setAuth({ isAuthenticated, user, APIUrl });
   }, []);
 
-  function login(userData, successCb = () => {}, errorCb = () => {}) {
+  function login(userData, successCb = () => { }, errorCb = () => { }) {
     axios
       .post(`${APIUrl}accounts/login/`, userData)
       .then((response) => {
         const token = response.data.token;
         if (token) {
-          localStorage.setItem("isAuthenticated", true);
+          setAuth(p => {
+            const isAuthenticated = true;
+            localStorage.setItem('isAuthenticated', isAuthenticated); 
+            return { ...p, isAuthenticated };
+          });
         }
         addRequestsTokenToAxios(token);
 
@@ -51,16 +53,15 @@ export const AuthProvider = ({ APIUrl, children }) => {
             const votes = votesResponse.data;
             console.log(elections);
             const electionLinks = generateElectionLinks(elections);
-            setUser(() => {
-              const newUser = { elections, votes, electionLinks };
-              localStorage.setItem("user", JSON.stringify(newUser));
-              return newUser;
-            });
+            const user = { elections, votes, electionLinks };
+            localStorage.setItem("user", JSON.stringify(user));
+
+            setAuth((p) => ({ ...p, user }));
           })
           .catch((error) => {
             console.log(error);
           });
-
+        console.log(axios.defaults.headers.common["Authorization"]);
         successCb(response);
       })
       .catch((error) => {
@@ -70,18 +71,20 @@ export const AuthProvider = ({ APIUrl, children }) => {
   }
 
   function logout(successCb = () => {}, errorCb = () => {}) {
+    setAuth(initialAuth);
+    localStorage.setItem("isAuthenticated", initialAuth.isAuthenticated);
+    localStorage.setItem("user", JSON.stringify(initialAuth.user));
     axios
       .get(`${APIUrl}accounts/logout`)
       .then((response) => {
-        setUser(initialAuth.user);
-        removeRequestsTokenFromAxios();
-        localStorage.setItem("isAuthenticated", false);
         successCb(response);
       })
       .catch((error) => {
         console.log(error);
+        console.log(axios.defaults.headers.common["Authorization"]);
         errorCb(error);
       });
+    removeRequestsTokenFromAxios();
   }
 
   return (

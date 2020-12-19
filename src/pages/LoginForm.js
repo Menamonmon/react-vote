@@ -80,7 +80,8 @@ export default function LoginForm(props) {
     // }
 
     function loginSuccessCallback() {
-      history.push(redirect);
+      history.push('/');
+      // window.location.reload();
     }
 
     function loginErrorCallback(error) {
