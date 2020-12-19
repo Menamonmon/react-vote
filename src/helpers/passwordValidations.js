@@ -12,23 +12,34 @@
 //  3) password is too short or too long
 // If the two passwords are correct true would be returned
 
-const loginPasswordValidation = (password, minLength = 8, maxLength = 50) => {
-    const errors = [];
-    if (password.length < minLength || password.length > maxLength) {
-        errors.push(`the password's length must be between ${minLength} and ${maxLength}`);
+const signupPasswordValidation = (
+  password,
+  password2,
+  minLength = 8,
+  maxLength = 50
+) => {
+  let errors = [];
+    if (password !== password2) {
+        errors.push(`passwords don't match.`);
     }
-    const validationRegex = /^.*(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/;
-    if (!validationRegex.test(password)) {
-        return errors.concat([
-            'your password must have at least one uppercase letter',
-            'your password must have at least one lowercase letter',
-            'your password must have at least one number',
-        ]);
-    }
-    if (errors) {
-        return errors;
-    }
-    return true;
+  if (password.length < minLength || password.length > maxLength) {
+    errors.push(
+      `the password's length must be between ${minLength} and ${maxLength}`
+    );
+  }
+  const validationRegex = /^.*(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/;
+  if (!validationRegex.test(password)) {
+    errors = errors.concat([
+      "your password must have at least one uppercase letter",
+      "your password must have at least one lowercase letter",
+      "your password must have at least one number",
+    ]);
+    return errors;
+  }
+  if (errors) {
+    return errors;
+  }
+  return true;
 };
 
-export { loginPasswordValidation, };
+export { signupPasswordValidation };

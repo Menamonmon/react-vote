@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 
 import { AuthContext } from "../contexts/AuthConext";
 import FormError from "../components/FormError";
-import { loginPasswordValidation } from "../helpers/passwordValidations";
 
 const initialLoginData = {
   username: "",
@@ -54,34 +53,19 @@ export default function LoginForm(props) {
     if (fieldsAreMissing) {
       return false;
     }
-
-    const { password } = fd;
-    const passwordsValidation = loginPasswordValidation(password);
-    if (passwordsValidation === true) {
-      return true;
-    } else {
-      setErrors((prev) => {
-        let confirmPasswordErrorList = [...prev.confirm_password];
-        confirmPasswordErrorList = confirmPasswordErrorList.concat(
-          passwordsValidation
-        );
-        return { ...prev, confirm_password: confirmPasswordErrorList };
-      });
-    }
     return false;
   };
 
   // A function that would run the necessary validations before performing the onSubmit action from the props
   const submitForm = (e) => {
     setErrors(initialLoginErrorsData);
-    // const isFormDataValid = validateFormData(formData);
-    // if (!isFormDataValid) {
-    //   return false;
-    // }
+    const isFormDataValid = validateFormData(formData);
+    if (!isFormDataValid) {
+      return false;
+    }
 
     function loginSuccessCallback() {
       history.push('/');
-      // window.location.reload();
     }
 
     function loginErrorCallback(error) {
