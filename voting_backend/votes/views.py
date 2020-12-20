@@ -42,8 +42,8 @@ class SubmitVoteView(CreateAPIView):
         '''
         user = request.user
 
-        election_id = int(request.data.get('election_id'))
-        candidate_id = int(request.data.get('candidate_id'))
+        election_id = request.data.get('election_id')
+        candidate_id = request.data.get('candidate_id')
 
         # Checking that the id's correspond with actual data
         data_not_found = False
@@ -79,7 +79,7 @@ class SubmitVoteView(CreateAPIView):
 
         vote = serializer.save()
 
-        return Response({ 'details': 'vote submitted successfully', 'user_id': user_id, 'candidate_id': candidate_id, 'election_id': election_id }, status=status.HTTP_201_CREATED)
+        return Response({ 'details': 'vote submitted successfully', 'vote': vote }, status=status.HTTP_201_CREATED)
 
 
 class DeleteVoteView(APIView):
@@ -87,7 +87,15 @@ class DeleteVoteView(APIView):
     
     def delete(self, request, form=None):
         vote_id = request.data.get('vote_id')
-        vote = Vote.objects.get(id=vote_id)
+        try: 
+            vote = Vote.objects.get(id=vote_id)
+        except Vote.DoesNotExist:
+            return Response({ 'vote_id': 'invalid vote_id' }, status=status.HTTP_400_BAD_REQUEST)
 
-        # if vote.user.id != 
-        return
+        user = request.user
+        
+        if user != vote.user:
+            return Response({ 'details': 'unarthorized to delete a vote that does not belong to you' }, status=status.HTTP_401_UNAUTHORIZED)
+
+        vote.delete()
+        return Response({ 'details': 'vote deleted successfully' }, status=status.HTTP_200_OK)
