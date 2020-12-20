@@ -12,7 +12,7 @@ class ListVoteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vote
-        fields = ('user', 'election', 'candidate')
+        fields = ('id', 'user', 'election', 'candidate')
 
 class CreateVoteSerializer(serializers.ModelSerializer):
     class Meta:
