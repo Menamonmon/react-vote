@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView, CreateAPIView
+from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authtoken.models import Token
 
@@ -32,19 +33,21 @@ class SubmitVoteView(CreateAPIView):
     permission_classes = [IsAuthenticated,]
 
     def post(self, request, format=None):
-        token_key = request.headers.get('Authorization').replace('Token ', '')
-        user_id_from_token = Token.objects.get(key=token_key).user.id
-        user_id = int(request.data.get('user_id'))
-        if user_id_from_token != user_id:
-            return Response({ 'user_id': 'invalid user id (id must be the same as the user logged in)' }, status=status.HTTP_401_UNAUTHORIZED)
-        
+        '''
+        Request Shape: 
+        {
+            election_id: int,
+            candidate_id: int,
+        }
+        '''
+        user = request.user
+
         election_id = int(request.data.get('election_id'))
         candidate_id = int(request.data.get('candidate_id'))
 
         # Checking that the id's correspond with actual data
         data_not_found = False
         try:
-            user = CustomUser.objects.get(id=user_id)
             election = Election.objects.get(id=election_id)
             candidate = Candidate.objects.get(id=candidate_id)
         except (Election.DoesNotExist, Candidate.DoesNotExist) as e:
@@ -77,3 +80,14 @@ class SubmitVoteView(CreateAPIView):
         vote = serializer.save()
 
         return Response({ 'details': 'vote submitted successfully', 'user_id': user_id, 'candidate_id': candidate_id, 'election_id': election_id }, status=status.HTTP_201_CREATED)
+
+
+class DeleteVoteView(APIView):
+    permission_classes = [IsAuthenticated,]
+    
+    def delete(self, request, form=None):
+        vote_id = request.data.get('vote_id')
+        vote = Vote.objects.get(id=vote_id)
+
+        # if vote.user.id != 
+        return
