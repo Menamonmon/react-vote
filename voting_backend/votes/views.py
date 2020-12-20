@@ -62,10 +62,10 @@ class SubmitVoteView(CreateAPIView):
         if matching_votes.exists():
             assert matching_votes.count() == 1
 
-            prev_vote = matching_votes[0]
-            prev_vote.candidate = candidate
-            prev_vote.save()
-            return Response({ 'details': ['vote edited successfully'] }, status=status.HTTP_200_OK)
+            vote = matching_votes[0]
+            vote.candidate = candidate
+            vote.save()
+            return Response({ 'details': 'vote edited successfully', 'vote_id':vote.id, 'election_id':vote.election.id, 'candidate_id':vote.candidate.id }, status=status.HTTP_200_OK)
 
         serializer = self.serializer_class(
             data={
@@ -79,7 +79,7 @@ class SubmitVoteView(CreateAPIView):
 
         vote = serializer.save()
 
-        return Response({ 'details': 'vote submitted successfully', 'vote': vote }, status=status.HTTP_201_CREATED)
+        return Response({ 'details': 'vote submitted successfully', 'vote_id':vote.id, 'election_id':vote.election.id, 'candidate_id':vote.candidate.id }, status=status.HTTP_201_CREATED)
 
 
 class DeleteVoteView(APIView):
