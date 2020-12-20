@@ -12,6 +12,9 @@ class Vote(models.Model):
     candidate = models.ForeignKey('elections.Candidate', on_delete=models.CASCADE)
     election = models.ForeignKey('elections.Election', on_delete=models.CASCADE)
 
+    class Meta:
+        unique_together = ('user', 'election')
+
     def clean(self):
         errors = {}
         if not self.election.candidate_set.filter(id=self.candidate.id).exists():
