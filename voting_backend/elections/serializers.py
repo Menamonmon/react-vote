@@ -13,3 +13,8 @@ class ElectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Election
         fields = ('id', '_type', 'year', 'state', 'created_at', 'candidate_set')
+
+class ElectionSerializerWithoutCandidates(serializers.ModelSerializer):
+    class Meta:
+        model = Election
+        fields = ('id', '_type', 'year', 'state', 'created_at')
