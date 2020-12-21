@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 
 export default function Vote({ election, candidate, link }) {
   return (
-    <Link to={link.path} style={{ textDecoration: "none" }}>
+    <Link
+      to={link.path}
+      title="Go to this election"
+      style={{ textDecoration: "none" }}
+    >
       <div className="vote-containter">
         <div className="vote-election-section">
           <h4 className="candidate-title">
