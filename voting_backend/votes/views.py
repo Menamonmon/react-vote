@@ -85,8 +85,7 @@ class SubmitVoteView(CreateAPIView):
 class DeleteVoteView(APIView):
     permission_classes = [IsAuthenticated,]
     
-    def delete(self, request, form=None):
-        vote_id = request.data.get('vote_id')
+    def delete(self, request, vote_id, form=None):
         try: 
             vote = Vote.objects.get(id=vote_id)
         except Vote.DoesNotExist:
