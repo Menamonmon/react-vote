@@ -8,7 +8,7 @@ export default function Vote({ election, candidate, link }) {
       title="Go to this election"
       style={{ textDecoration: "none" }}
     >
-      <div className="vote-containter">
+      <div className="vote-container">
         <div className="vote-election-section">
           <h4 className="candidate-title">
             Election: {`${election.state} ${election._type} (${election.year})`}
