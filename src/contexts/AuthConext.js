@@ -90,7 +90,7 @@ export const AuthProvider = ({ APIUrl, children }) => {
   }
 
   function syncUserData() {
-    getUserData(auth.APIUrl)
+    return getUserData(auth.APIUrl)
       .then((response) => {
         const [electionsResponse, votesResponse] = response;
         const elections = electionsResponse.data;

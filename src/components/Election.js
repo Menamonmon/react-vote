@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { submitVote } from "../helpers/requests";
+import { deleteVote, submitVote } from "../helpers/requests";
 import { AuthContext } from "../contexts/AuthConext";
 
 export function CandidateBox(props) {
@@ -20,6 +20,26 @@ const CurrentCandidate = ({ name }) => (
   </h4>
 );
 
+function ElectionFooter({ currentCandidate, onSubmit, onDelete }) {
+  return (
+    <div className="election-footer">
+      <CurrentCandidate name={currentCandidate.name} />
+      <button
+        className="election-delete-btn form-submit-btn"
+        onClick={onDelete}
+      >
+        Clear Vote
+      </button>
+      <button
+        className="election-submit-btn form-submit-btn"
+        onClick={onSubmit}
+      >
+        Submit Vote
+      </button>
+    </div>
+  );
+}
+
 export default function Election(props) {
   const { type, id, state, year, candidates } = props;
 
@@ -30,10 +50,11 @@ export default function Election(props) {
   } = useContext(AuthContext);
 
   useEffect(() => {
-    loadVotes(votes);
+    setVote(loadVotes(votes));
   }, []);
 
   let [currentCandidate, setCurrentCandidate] = useState({});
+  let [vote, setVote] = useState({});
   let [checkedCandidates, setCheckedCandidates] = useState(
     Array(candidates.length).fill(false)
   );
@@ -57,10 +78,10 @@ export default function Election(props) {
           return p;
         });
         setCurrentCandidate(candidate);
-
-        return;
+        return vote;
       }
     }
+    setCheckedCandidates(Array(candidates.length).fill(false));
   }
 
   function submitElectionVote() {
@@ -70,7 +91,22 @@ export default function Election(props) {
     };
     if (Object.values(data).includes(undefined)) return;
     submitVote(APIUrl, data).then(() => {
-      syncUserData();
+      syncUserData().then(() => {
+        setVote(loadVotes(votes));
+      });
+    });
+  }
+
+  function deleteElectionVote() {
+    if (vote === undefined) {
+      setVote(loadVotes(votes));
+      return;
+    }
+    if (vote.id === undefined) return;
+    deleteVote(APIUrl, vote.id).then(() => {
+      syncUserData().then(() => {
+        setVote(loadVotes(votes));
+      });
     });
   }
 
@@ -106,15 +142,11 @@ export default function Election(props) {
           );
         })}
       </ul>
-      <div className="election-footer">
-        <CurrentCandidate name={currentCandidate.name} />
-        <button
-          className="election-submit-btn form-submit-btn"
-          onClick={submitElectionVote}
-        >
-          Submit Vote
-        </button>
-      </div>
+      <ElectionFooter
+        currentCandidate={currentCandidate}
+        onSubmit={submitElectionVote}
+        onDelete={deleteElectionVote}
+      />
     </div>
   );
 }

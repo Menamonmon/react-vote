@@ -8,8 +8,8 @@ export function getUserData(APIUrl) {
   return Promise.all([electionsPromise, votesPromise]);
 }
 
-export function deleteVote(APIUrl, vote_id) {
-  return axios.delete(`${APIUrl}votes/delete/`, { vote_id });
+export function deleteVote(APIUrl, voteId) {
+  return axios.delete(`${APIUrl}votes/delete/${voteId}`);
 }
 
 export function submitVote(APIUrl, data) {
