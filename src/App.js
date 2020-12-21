@@ -6,8 +6,8 @@ import Nav from "./components/Nav";
 import ProtectedRoute, { UnprotectedRoute } from "./components/ProtectedRoute";
 import LoginForm from "./pages/LoginForm";
 import SignupForm from "./pages/SignupForm";
-import Votes from "./pages/Votes";
-import Results from "./pages/Results";
+import VotesPage from "./pages/VotesPage";
+import ResultsPage from "./pages/ResultsPage";
 import Home from "./pages/Home";
 import LogoutPage from "./pages/LogoutPage";
 
@@ -49,14 +49,14 @@ export default function App() {
               exact
               path="/results"
               redirect="/"
-              component={Results}
+              component={ResultsPage}
               key="results"
             />
             <ProtectedRoute
               exact
               path="/votes"
               redirect="/"
-              component={Votes}
+              component={VotesPage}
               key="votes"
             />
             <ElectionRoutes />
