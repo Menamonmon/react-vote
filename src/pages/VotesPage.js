@@ -18,6 +18,7 @@ export default function VotesPage() {
   }
   return (
     <div className="votes-page">
+      <h1 className="auth-form-title">Here are your votes:</h1>
       {votes.map(({ id, election, candidate }) => (
         <Vote
           candidate={candidate}
