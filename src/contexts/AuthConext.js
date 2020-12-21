@@ -31,13 +31,13 @@ export const AuthProvider = ({ APIUrl, children }) => {
     try {
       user = JSON.parse(localStorage.getItem("user"));
       if (!user) {
-        throw new Error('Invalid user');
+        throw new Error("Invalid user");
       }
     } catch (error) {
       user = initialAuth.user;
     }
 
-    setAuth(p => ({ ...p, isAuthenticated, user }));
+    setAuth((p) => ({ ...p, isAuthenticated, user }));
   }, []);
 
   function login(
@@ -53,28 +53,14 @@ export const AuthProvider = ({ APIUrl, children }) => {
         const { token } = response.data;
         if (token) {
           setAuth((p) => {
-            p = JSON.parse(JSON.stringify(p))
+            p = JSON.parse(JSON.stringify(p));
             p.isAuthenticated = true;
             localStorage.setItem("isAuthenticated", p.isAuthenticated);
             return p;
           });
         }
         addRequestsTokenToAxios(token);
-
-        getUserData(APIUrl)
-          .then((response) => {
-            const [electionsResponse, votesResponse] = response;
-            const elections = electionsResponse.data;
-            const votes = votesResponse.data;
-            const electionLinks = generateElectionLinks(elections);
-            const user = { elections, votes, electionLinks };
-            localStorage.setItem("user", JSON.stringify(user));
-
-            setAuth((p) => ({ ...p, user }));
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        syncUserData()
         successCb(response);
       })
       .catch((error) => {
@@ -98,13 +84,30 @@ export const AuthProvider = ({ APIUrl, children }) => {
       });
     removeRequestsTokenFromAxios();
   }
-  
+
   function signup(userData, successCb = () => {}, errorCb = () => {}) {
     login(userData, successCb, errorCb, true);
   }
 
+  function syncUserData() {
+    getUserData(auth.APIUrl)
+      .then((response) => {
+        const [electionsResponse, votesResponse] = response;
+        const elections = electionsResponse.data;
+        const votes = votesResponse.data;
+        const electionLinks = generateElectionLinks(elections);
+        const user = { elections, votes, electionLinks };
+        localStorage.setItem("user", JSON.stringify(user));
+
+        setAuth((p) => ({ ...p, user }));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   return (
-    <AuthContext.Provider value={{ ...auth, login, logout, signup }}>
+    <AuthContext.Provider value={{ ...auth, login, logout, signup, syncUserData }}>
       {children}
     </AuthContext.Provider>
   );
