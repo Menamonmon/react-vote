@@ -319,3 +319,31 @@
 .logout-content {
   margin: 30px 0;
 }
+
+.votes-page {
+  width: 80vw;
+  min-width: 500px;
+  max-width: 600px;
+  background: var(--dark-1);
+  height: fit-content;
+  margin: auto;
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 20px;
+  color: var(--light-2);
+}
+
+.vote-container {
+  background: var(--dark-2);
+  color: var(--light-2);
+  border: 2px solid var(--light-2);
+  border-radius: 15px;
+	margin: 20px 10px;
+	text-indent: 2rem;
+	padding: 10px;
+}
+
+.vote-container:hover {
+	background: white;
+	color: var(--dark-3);
+}
