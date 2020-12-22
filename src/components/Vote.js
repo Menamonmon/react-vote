@@ -8,17 +8,13 @@ export default function Vote({ election, candidate, link }) {
       title="Go to this election"
       style={{ textDecoration: "none" }}
     >
-      <div className="vote-container">
-        <div className="vote-election-section">
-          <h4 className="candidate-title">
-            Election: {`${election.state} ${election._type} (${election.year})`}
-          </h4>
-        </div>
-        <div className="vote-candidate-section">
-          <h4 className="candidate-title">
-            Candidate: {`${candidate.name} (${candidate.party})`}
-          </h4>
-        </div>
+      <div className="vote-box container-btn">
+        <h5 className="vote-subtitle">
+          E: {`${election.state} ${election._type} (${election.year})`}
+        </h5>
+        <h5 className="vote-subtitle">
+          C: {`${candidate.name} (${candidate.party})`}
+        </h5>
       </div>
     </Link>
   );

@@ -17,8 +17,9 @@ export default function VotesPage() {
     throw new Error("Election Link Not Found");
   }
   return (
-    <div className="votes-page">
-      <h1 className="auth-form-title">Here are your votes:</h1>
+    <div className="votes-page container">
+      <h2 className="auth-form-title container-title">Here are your votes:</h2>
+      <h4 className="container-subtitle">{"Election (E) and Candidate (C)"}</h4>
       {votes.map(({ id, election, candidate }) => (
         <Vote
           candidate={candidate}
