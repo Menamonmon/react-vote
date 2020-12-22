@@ -6,7 +6,7 @@ export function CandidateBox(props) {
   const { name, party, checked } = props;
   return (
     <div
-      className={`candidate-box ${checked ? "checked" : ""}`}
+      className={`container-btn candidate-box ${checked ? "checked" : ""}`}
       onClick={props.onClick}
     >
       <h5 className="title">{`${name} (${party})`}</h5>
@@ -15,7 +15,7 @@ export function CandidateBox(props) {
 }
 
 const CurrentCandidate = ({ name }) => (
-  <h4 className="current-candidate">
+  <h4 className="container-subtitle current-candidate">
     {name ? `Chosen Candidate: ${name}` : "No Candidate Chosen Yet"}
   </h4>
 );
@@ -25,13 +25,13 @@ function ElectionFooter({ currentCandidate, onSubmit, onDelete }) {
     <div className="election-footer">
       <CurrentCandidate name={currentCandidate.name} />
       <button
-        className="election-delete-btn form-submit-btn"
+        className="election-delete-btn container-btn form-submit-btn"
         onClick={onDelete}
       >
         Clear Vote
       </button>
       <button
-        className="election-submit-btn form-submit-btn"
+        className="election-submit-btn container-btn form-submit-btn"
         onClick={onSubmit}
       >
         Submit Vote
@@ -111,15 +111,13 @@ export default function Election(props) {
   }
 
   return (
-    <div className="candidates-container" key={id}>
-      {type ? (
-        <div className="election-type-wrapper">
-          <h3 className="election-type">{`${state} ${type} Elections (${year}):`}</h3>
-        </div>
-      ) : (
-        ""
-      )}
-      <h4 className="title">Choose One of The Candidates Below:</h4>
+    <div className="election-container container" key={id}>
+      <h3 className="election-type container-title">
+        {`${state} ${type} Elections (${year}):`}
+      </h3>
+      <h4 className="container-subtitle">
+        Choose One of The Candidates Below:
+      </h4>
       <ul className="candidates-list">
         {candidates.map((candidate, index) => {
           const { name, party, id } = candidate;
