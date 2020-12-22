@@ -38,7 +38,7 @@ export default function App() {
               component={SignupForm}
               key="signup"
             />
-            <ProtectedRoute
+            <Route
               exact
               path="/logout"
               redirect="/"
