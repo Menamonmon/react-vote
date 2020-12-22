@@ -62,7 +62,7 @@ export default function LoginForm(props) {
     }
 
     function loginSuccessCallback() {
-      history.push('/');
+      history.push("/");
     }
 
     function loginErrorCallback(error) {
@@ -90,8 +90,8 @@ export default function LoginForm(props) {
   // Converting the errors state into displayable compoenents
   const errorComponents = errorToFormErrorComponent(errors);
   return (
-    <form className="auth-form">
-      <h2 className="auth-form-title">Login to React Vote</h2>
+    <form className="auth-form container">
+      <h2 className="auth-form-title container-title">Login to React Vote</h2>
       <label className="form-label login-label">
         Username:
         <input
@@ -116,7 +116,11 @@ export default function LoginForm(props) {
         />
         {errorComponents.password}
       </label>
-      <button className="form-submit-btn" type="button" onClick={submitForm}>
+      <button
+        className="form-submit-btn container-btn"
+        type="button"
+        onClick={submitForm}
+      >
         Login
       </button>
     </form>

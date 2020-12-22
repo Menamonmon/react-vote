@@ -128,8 +128,8 @@ export default function SignupForm({ redirect }) {
   // Converting the errors state into displayable compoenents
   const errorComponents = errorToFormErrorComponent(errors);
   return (
-    <form className="auth-form">
-      <h2 className="auth-form-title">Login to React Vote</h2>
+    <form className="auth-form container">
+      <h2 className="auth-form-title container-title">Signup for React Vote</h2>
       <label className="form-label signup-label">
         Username:
         <input
@@ -182,7 +182,7 @@ export default function SignupForm({ redirect }) {
         />
         {errorComponents.confirm_password}
       </label>
-      <button className="form-submit-btn" type="button" onClick={submitForm}>
+      <button className="form-submit-btn container-btn" type="button" onClick={submitForm}>
         Sign Up
       </button>
     </form>
