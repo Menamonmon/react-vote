@@ -72,15 +72,15 @@ export default function Navbar() {
         <div className="line-1 line"></div>
         <div className="line-2 line"></div>
         <div className="line-3 line"></div>
-        {isAuthenticated ? (
-          <AuthenticatedNavLinks
-            navToggled={navToggled}
-            electionLinks={electionLinks}
-          />
-        ) : (
-          <UnauthenticatedNavLinks navToggled={navToggled} />
-        )}
       </div>
+      {isAuthenticated ? (
+        <AuthenticatedNavLinks
+          navToggled={navToggled}
+          electionLinks={electionLinks}
+        />
+      ) : (
+        <UnauthenticatedNavLinks navToggled={navToggled} />
+      )}
     </nav>
   );
 }
