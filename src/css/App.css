@@ -20,6 +20,12 @@
   padding: 0;
   box-sizing: border-box;
   height: fit-content;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .container {
@@ -303,4 +309,41 @@
   display: block;
   margin: 15px 0;
   padding: 15px;
+}
+
+.result-box {
+  display: block;
+  margin: 20px 0;
+  overflow: hidden;
+}
+
+.result-box:hover {
+  cursor: pointer;
+}
+
+.result-box-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.arrow-btn {
+  display: inline;
+  transition: 0.5s;
+}
+
+.arrow-btn.open {
+  transform: rotate(90deg);
+}
+
+.candidates-results-container {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+.candidates-results-container.open {
+  max-height: fit-content;
+  overflow: none;
 }
