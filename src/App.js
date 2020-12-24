@@ -17,7 +17,7 @@ import { AuthProvider } from "./contexts/AuthConext";
 import ElectionRoutes from "./components/ElectionRoutes";
 
 export default function App() {
-  const APIUrl = "http://localhost:8000/";
+  const APIUrl = "http://menafilfil.pythonanywhere.com/";
 
   return (
     <div className="App">
