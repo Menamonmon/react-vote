@@ -25,15 +25,4 @@ export default function ElectionRoutes() {
       })}
     </>
   );
-
-  // const routes = electionsData.map(({ _type, state, year, id }, i) => {
-  //   const path = `/elections/${generateElectionSlug(_type, state, year)}`;
-  //   const content = `${_type} (${state} ${year})`;
-  //   links.push({ path, content });
-  //   return (
-  //     <RouteComponent exact path={path} key={id}>
-  //       {elections[i]}
-  //     </RouteComponent>
-  //   );
-  // });
 }
