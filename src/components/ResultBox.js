@@ -23,8 +23,13 @@ export function ArrowButton({ toggled, onClick }) {
 export function CandidatesResultsContainer({ toggled, candidates }) {
   return (
     <div className={`candidates-results-container ${toggled ? "open" : ""}`}>
-      {candidates.map(({ name, party, vote_count }) => (
-        <CandidateResult name={name} party={party} voteCount={vote_count} />
+      {candidates.map(({ id, name, party, vote_count }) => (
+        <CandidateResult
+          name={name}
+          party={party}
+          voteCount={vote_count}
+          key={id}
+        />
       ))}
     </div>
   );
@@ -40,7 +45,7 @@ export default function ResultBox({
 
   return (
     <div className="container-btn result-box" onClick={onToggle}>
-      <div className="result-box-header">
+      <div className="result-box-header" key="result-box-header">
         <h4 className="conatiner-subtitle">{`${_type} (${year} ${state})`}</h4>
         <ArrowButton toggled={toggled} />
       </div>
