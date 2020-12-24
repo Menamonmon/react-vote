@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/react-vote/static/css/main.e6bef39c.chunk.css",
-    "main.js": "/react-vote/static/js/main.dfabd383.chunk.js",
-    "main.js.map": "/react-vote/static/js/main.dfabd383.chunk.js.map",
+    "main.js": "/react-vote/static/js/main.997aaaf4.chunk.js",
+    "main.js.map": "/react-vote/static/js/main.997aaaf4.chunk.js.map",
     "runtime-main.js": "/react-vote/static/js/runtime-main.ec80b599.js",
     "runtime-main.js.map": "/react-vote/static/js/runtime-main.ec80b599.js.map",
     "static/js/2.4c0ad89b.chunk.js": "/react-vote/static/js/2.4c0ad89b.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.ec80b599.js",
     "static/js/2.4c0ad89b.chunk.js",
     "static/css/main.e6bef39c.chunk.css",
-    "static/js/main.dfabd383.chunk.js"
+    "static/js/main.997aaaf4.chunk.js"
   ]
 }
