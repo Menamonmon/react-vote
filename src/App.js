@@ -4,12 +4,14 @@ import "./css/App.css";
 
 import Nav from "./components/Nav";
 import ProtectedRoute, { UnprotectedRoute } from "./components/ProtectedRoute";
-import LoginForm from "./pages/LoginForm";
-import SignupForm from "./pages/SignupForm";
-import VotesPage from "./pages/VotesPage";
-import ResultsPage from "./pages/ResultsPage";
-import Home from "./pages/Home";
-import LogoutPage from "./pages/LogoutPage";
+import {
+  Home,
+  LoginForm,
+  LogoutPage,
+  SignupForm,
+  VotesPage,
+  ResultsPage,
+} from "./pages/";
 
 import { AuthProvider } from "./contexts/AuthConext";
 import ElectionRoutes from "./components/ElectionRoutes";
