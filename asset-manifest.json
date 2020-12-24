@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/static/css/main.e6bef39c.chunk.css",
-    "main.js": "/static/js/main.dfabd383.chunk.js",
-    "main.js.map": "/static/js/main.dfabd383.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.d0662c6c.js",
-    "runtime-main.js.map": "/static/js/runtime-main.d0662c6c.js.map",
-    "static/js/2.4c0ad89b.chunk.js": "/static/js/2.4c0ad89b.chunk.js",
-    "static/js/2.4c0ad89b.chunk.js.map": "/static/js/2.4c0ad89b.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/main.e6bef39c.chunk.css.map": "/static/css/main.e6bef39c.chunk.css.map",
-    "static/js/2.4c0ad89b.chunk.js.LICENSE.txt": "/static/js/2.4c0ad89b.chunk.js.LICENSE.txt"
+    "main.css": "/react-vote/static/css/main.e6bef39c.chunk.css",
+    "main.js": "/react-vote/static/js/main.dfabd383.chunk.js",
+    "main.js.map": "/react-vote/static/js/main.dfabd383.chunk.js.map",
+    "runtime-main.js": "/react-vote/static/js/runtime-main.ec80b599.js",
+    "runtime-main.js.map": "/react-vote/static/js/runtime-main.ec80b599.js.map",
+    "static/js/2.4c0ad89b.chunk.js": "/react-vote/static/js/2.4c0ad89b.chunk.js",
+    "static/js/2.4c0ad89b.chunk.js.map": "/react-vote/static/js/2.4c0ad89b.chunk.js.map",
+    "index.html": "/react-vote/index.html",
+    "static/css/main.e6bef39c.chunk.css.map": "/react-vote/static/css/main.e6bef39c.chunk.css.map",
+    "static/js/2.4c0ad89b.chunk.js.LICENSE.txt": "/react-vote/static/js/2.4c0ad89b.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.d0662c6c.js",
+    "static/js/runtime-main.ec80b599.js",
     "static/js/2.4c0ad89b.chunk.js",
     "static/css/main.e6bef39c.chunk.css",
     "static/js/main.dfabd383.chunk.js"
