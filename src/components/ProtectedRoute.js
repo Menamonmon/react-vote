@@ -26,7 +26,7 @@ export default function ProtectedRoute({ component: Component, ...rest }) {
 }
 
 export function UnprotectedRoute({ component: Component, ...rest }) {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated } = useAuth();
   return (
     <Route
       {...rest}
