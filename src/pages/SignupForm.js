@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-import { AuthContext } from "../contexts/AuthConext";
+import { useAuth } from "../contexts/AuthConext";
 import FormError from "../components/FormError";
 import { signupPasswordValidation } from "../helpers/passwordValidations";
 import axios from "axios";
@@ -35,7 +35,7 @@ function errorToFormErrorComponent(errors) {
 }
 
 export default function SignupForm({ redirect }) {
-  const { signup, APIUrl } = useContext(AuthContext);
+  const { signup, APIUrl } = useAuth();
   const history = useHistory();
   let [statesList, setStatesList] = useState([]);
 
@@ -92,15 +92,15 @@ export default function SignupForm({ redirect }) {
   };
 
   // A function that would run the necessary validations before performing the onSubmit action from the props
-	const submitForm = (e) => {
- 	    setErrors(initialSignupErrorsData);
+  const submitForm = (e) => {
+    setErrors(initialSignupErrorsData);
     const isFormDataValid = validateFormData(formData);
-		if (!isFormDataValid) {
+    if (!isFormDataValid) {
       return false;
-		}
-		
+    }
+
     function signupSuccessCallback() {
-			history.push(redirect);
+      history.push(redirect);
     }
 
     function signupErrorCallback(error) {
@@ -121,7 +121,7 @@ export default function SignupForm({ redirect }) {
 
   // A function that updates the formData as the data changes in the input fields below
   const handleChange = (e) => {
-		const { name, value } = e.target;
+    const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -182,7 +182,11 @@ export default function SignupForm({ redirect }) {
         />
         {errorComponents.confirm_password}
       </label>
-      <button className="form-submit-btn container-btn" type="button" onClick={submitForm}>
+      <button
+        className="form-submit-btn container-btn"
+        type="button"
+        onClick={submitForm}
+      >
         Sign Up
       </button>
     </form>

@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import ResultBox from "../components/ResultBox";
-import { AuthContext } from "../contexts/AuthConext";
+import { useAuth } from "../contexts/AuthConext";
 
 export default function ResultsPage() {
   const {
     user: { elections },
-  } = useContext(AuthContext);
+  } = useAuth();
   return (
     <div className="results-page container">
       <h3 className="container-title">Here are your election results:</h3>

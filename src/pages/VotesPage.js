@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import Vote from "../components/Vote";
-import { AuthContext } from "../contexts/AuthConext";
+import { useAuth } from "../contexts/AuthConext";
 
 export default function VotesPage() {
   const {
     user: { votes, electionLinks },
-  } = useContext(AuthContext);
+  } = useAuth();
 
   function getElectionLink(election, links) {
     const { id } = election;

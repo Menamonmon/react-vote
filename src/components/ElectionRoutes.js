@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import { electionsList } from "./Election";
 import ProtectedRoute from "./ProtectedRoute";
-import { AuthContext } from "../contexts/AuthConext";
+import { useAuth } from "../contexts/AuthConext";
 
 export default function ElectionRoutes() {
   const {
     user: { electionLinks, elections },
-  } = useContext(AuthContext);
+  } = useAuth();
   const electionComponenets = electionsList(elections);
   return (
     <>

@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { deleteVote, submitVote } from "../helpers/requests";
-import { AuthContext } from "../contexts/AuthConext";
+import { useAuth } from "../contexts/AuthConext";
 
 export function CandidateBox(props) {
   const { name, party, checked } = props;
@@ -47,7 +47,7 @@ export default function Election(props) {
     APIUrl,
     syncUserData,
     user: { votes },
-  } = useContext(AuthContext);
+  } = useAuth();
 
   useEffect(() => {
     setVote(loadVotes(votes));

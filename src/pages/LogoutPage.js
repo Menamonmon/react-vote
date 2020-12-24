@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthConext";
+import { useAuth } from "../contexts/AuthConext";
 
 export default function LogoutPage() {
-  const { logout } = useContext(AuthContext);
+  const { logout } = useAuth();
 
   useEffect(() => {
     logout();

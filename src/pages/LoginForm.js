@@ -1,7 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import { AuthContext } from "../contexts/AuthConext";
+import { useAuth } from "../contexts/AuthConext";
 import FormError from "../components/FormError";
 
 const initialLoginData = {
@@ -30,7 +30,7 @@ function errorToFormErrorComponent(errors) {
 
 export default function LoginForm(props) {
   const { redirect } = props;
-  const { login } = useContext(AuthContext);
+  const { login } = useAuth();
   const history = useHistory();
 
   // The Component's states
