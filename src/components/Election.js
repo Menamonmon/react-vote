@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { deleteVote, submitVote } from "../helpers/requests";
 import { useAuth } from "../contexts/AuthConext";
 
@@ -48,41 +48,43 @@ export default function Election(props) {
     syncUserData,
     user: { votes },
   } = useAuth();
-
-  useEffect(() => {
-    setVote(loadVotes(votes));
-  }, [loadVotes, votes]);
-
   let [currentCandidate, setCurrentCandidate] = useState({});
   let [vote, setVote] = useState({});
   let [checkedCandidates, setCheckedCandidates] = useState(
     Array(candidates.length).fill(false)
   );
 
-  function loadVotes(votes) {
-    for (const vote of votes) {
-      if (vote.election.id === id) {
-        const candidate_id = vote.candidate.id;
-        const matchingCandidates = candidates.filter(
-          (candidate) => candidate.id === candidate_id
-        );
-        if (matchingCandidates.length !== 1) {
-          throw Error("Candidate ID Not Valid");
+  const loadVotes = useCallback(
+    (votes) => {
+      for (const vote of votes) {
+        if (vote.election.id === id) {
+          const candidate_id = vote.candidate.id;
+          const matchingCandidates = candidates.filter(
+            (candidate) => candidate.id === candidate_id
+          );
+          if (matchingCandidates.length !== 1) {
+            throw Error("Candidate ID Not Valid");
+          }
+          const candidate = matchingCandidates[0];
+          const candidateIndex = candidates.indexOf(candidate);
+          setCheckedCandidates((p) => {
+            const prevCandidateIndex = candidates.indexOf(currentCandidate);
+            p[prevCandidateIndex] = false;
+            p[candidateIndex] = true;
+            return p;
+          });
+          setCurrentCandidate(candidate);
+          return vote;
         }
-        const candidate = matchingCandidates[0];
-        const candidateIndex = candidates.indexOf(candidate);
-        setCheckedCandidates((p) => {
-          const prevCandidateIndex = candidates.indexOf(currentCandidate);
-          p[prevCandidateIndex] = false;
-          p[candidateIndex] = true;
-          return p;
-        });
-        setCurrentCandidate(candidate);
-        return vote;
       }
-    }
-    setCheckedCandidates(Array(candidates.length).fill(false));
-  }
+      setCheckedCandidates(Array(candidates.length).fill(false));
+    },
+    [candidates, currentCandidate, id]
+  );
+
+  useEffect(() => {
+    setVote(loadVotes(votes));
+  }, [loadVotes, votes]);
 
   function submitElectionVote() {
     const data = {
