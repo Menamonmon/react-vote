@@ -29,7 +29,6 @@ function errorToFormErrorComponent(errors) {
 }
 
 export default function LoginForm(props) {
-  const { redirect } = props;
   const { login } = useAuth();
   const history = useHistory();
 

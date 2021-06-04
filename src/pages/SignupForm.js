@@ -49,7 +49,7 @@ export default function SignupForm({ redirect }) {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [APIUrl]);
 
   // The Component's states
   let [formData, setForm] = useState(initialSignupData);
@@ -82,9 +82,8 @@ export default function SignupForm({ redirect }) {
     } else {
       setErrors((prev) => {
         let confirmPasswordErrorList = [...prev.confirm_password];
-        confirmPasswordErrorList = confirmPasswordErrorList.concat(
-          passwordsValidation
-        );
+        confirmPasswordErrorList =
+          confirmPasswordErrorList.concat(passwordsValidation);
         return { ...prev, confirm_password: confirmPasswordErrorList };
       });
     }

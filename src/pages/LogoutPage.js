@@ -7,7 +7,7 @@ export default function LogoutPage() {
 
   useEffect(() => {
     logout();
-  }, []);
+  }, [logout]);
 
   return (
     <div className="logout-page auth-form container">

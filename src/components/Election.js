@@ -51,7 +51,7 @@ export default function Election(props) {
 
   useEffect(() => {
     setVote(loadVotes(votes));
-  }, []);
+  }, [loadVotes, votes]);
 
   let [currentCandidate, setCurrentCandidate] = useState({});
   let [vote, setVote] = useState({});
